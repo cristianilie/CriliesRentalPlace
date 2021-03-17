@@ -1,2 +1,2 @@
 # CriliesRentalPlace
-Product rendal management sistem build by Cristache Ilie
+Product rental management system built by Cristache Ilie
