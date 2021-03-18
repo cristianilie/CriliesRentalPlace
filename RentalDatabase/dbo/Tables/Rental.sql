@@ -1,0 +1,11 @@
+﻿CREATE TABLE [dbo].[Rental]
+(
+	[Id] INT NOT NULL PRIMARY KEY IDENTITY, 
+    [CustomerId] INT NOT NULL, 
+    [ProductId] INT NOT NULL, 
+    [StartDate] DATETIME2 NOT NULL, 
+    [EndDate] DATETIME2 NOT NULL, 
+    [TotalPrice] MONEY NOT NULL, 
+    CONSTRAINT [FK_Rental_ToCustomerTable] FOREIGN KEY (CustomerId) REFERENCES Customer(Id),
+    CONSTRAINT [FK_Rental_ToProductTable] FOREIGN KEY (ProductId) REFERENCES Product(Id)
+)
