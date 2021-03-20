@@ -4,5 +4,5 @@
 	[FirstName] VARCHAR(50) NOT NULL, 
 	[LastName] VARCHAR(50) NOT NULL, 
 	[Email] VARCHAR(150) NOT NULL, 
-	[Phone] NVARCHAR(50) NOT NULL
+	[Phone] VARCHAR(50) NOT NULL
 )

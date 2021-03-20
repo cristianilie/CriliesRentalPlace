@@ -3,6 +3,7 @@
 	[Id] INT NOT NULL PRIMARY KEY IDENTITY, 
     [CustomerId] INT NOT NULL, 
     [ProductId] INT NOT NULL, 
+    [RentedQuantity] INT NOT NULL DEFAULT 1, 
     [StartDate] DATETIME2 NOT NULL, 
     [EndDate] DATETIME2 NOT NULL, 
     [TotalPrice] MONEY NOT NULL, 
