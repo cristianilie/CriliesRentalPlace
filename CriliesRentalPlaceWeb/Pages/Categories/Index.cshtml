@@ -1,0 +1,22 @@
+﻿@page
+@model CriliesRentalPlaceWeb.Pages.Categories.IndexModel
+@{
+}
+
+<h4>Manage Categories</h4>
+<h5><a class="btn-link" asp-page="/Categories/Edit">Create New Category</a></h5>
+
+<ul class="list-group">
+
+    @foreach (var category in Model.Categories)
+    {
+        <li class="list-group-item">
+            @category.Id /  @category.Title
+            <div class="btn-group float-right" role="group" aria-label="Categories Options">
+                <a type="button" class="btn btn-outline-info" asp-page="/Categories/Edit" asp-route-id="@category.Id">Edit</a>
+                <a type="button" class="btn btn-outline-warning" asp-page="/Categories/DeleteCategory" asp-route-id="@category.Id">Delete</a>
+            </div>
+        </li>
+
+    }
+</ul>

@@ -8,24 +8,38 @@ using System.Threading.Tasks;
 
 namespace CriliesRentalPlaceLibrary.DataManagement
 {
-    public class ProductDataService : IDataService<Product>
+    public class ProductDataService : IProductHandlingDataService<Product>
     {
         private readonly ISqlDataAccess _db;
+        private readonly IDataService<Category> _category;
         private const string connectionStringName = "SqlDb";
+
 
         public ProductDataService(ISqlDataAccess db)
         {
             _db = db;
         }
 
-        public void Create(Product item)
+        public int Create(Product item)
         {
-            _db.SaveData("spProduct_Insert", new { name = item.Name, description = item.Description }, connectionStringName, true);
+            return _db.LoadData<int, dynamic>("spProduct_Insert",
+                         new
+                         {
+                             name = item.Name,
+                             description = item.Description,
+                             isActive = item.IsActive,
+                             imagePath = item.ImagePath
+                         },
+                         connectionStringName,
+                         true).SingleOrDefault();
         }
 
         public void Delete(int id)
         {
-            //_db.SaveData("spProduct_Delete", new { id }, connectionStringName, true);
+            _db.SaveData("spProduct_Delete", new { id }, connectionStringName, true);
+            //TODO - Check if product has been involvend in any rental
+            //if not => delete
+            //else => deactivate
         }
 
         public IEnumerable<Product> GetAll()
@@ -35,13 +49,34 @@ namespace CriliesRentalPlaceLibrary.DataManagement
 
         public Product GetById(int id)
         {
-            return _db.LoadData<Product, dynamic>("SELECT * FROM dbo.Product WHERE Id = @id", new { id }, connectionStringName, false).FirstOrDefault();
-
+            return _db.LoadData<Product, dynamic>("SELECT * FROM dbo.Product WHERE Id = @id",
+                                                  new { id },
+                                                  connectionStringName,
+                                                  false).FirstOrDefault();
         }
 
         public void Update(int id, Product item)
         {
-            _db.SaveData("spProduct_Update", new { id, name = item.Name, description = item.Description, isActive = item.IsActive }, connectionStringName, true);
+            _db.SaveData("spProduct_Update",
+                         new
+                         {
+                             id,
+                             name = item.Name,
+                             description = item.Description,
+                             isActive = item.IsActive,
+                             imagePath = item.ImagePath
+                         },
+                         connectionStringName,
+                         true);
+        }
+
+        public IEnumerable<AvailableProduct> GetAvailableProducts(DateTime startDate, DateTime endDate, int categoryId = 0)
+        {
+            //_category.GetById(categoryId);
+            return _db.LoadData<AvailableProduct, dynamic>("spProduct_GetAvailableProducts",
+                                                           new { startDate = startDate.Date, endDate = endDate.Date },
+                                                           connectionStringName,
+                                                           true);
         }
     }
 }

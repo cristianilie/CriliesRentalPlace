@@ -64,7 +64,7 @@
   <ItemGroup>
     <Build Include="dbo\Tables\Customer.sql" />
     <Build Include="dbo\Tables\CustomerAdress.sql" />
-    <Build Include="dbo\Tables\ProductStock.sql" />
+    <Build Include="dbo\Tables\ProductPrice.sql" />
     <Build Include="dbo\Tables\Product.sql" />
     <Build Include="dbo\Tables\Category.sql" />
     <Build Include="dbo\Tables\ProductCategory.sql" />
@@ -83,17 +83,21 @@
     <Build Include="dbo\StoredProcedures\spProductCategory_Delete.sql" />
     <Build Include="dbo\StoredProcedures\spProductCategory_Insert.sql" />
     <Build Include="dbo\StoredProcedures\spProductCategory_Update.sql" />
-    <Build Include="dbo\StoredProcedures\spProductStock_Insert.sql" />
-    <Build Include="dbo\StoredProcedures\spProductStock_Update.sql" />
+    <Build Include="dbo\StoredProcedures\spProductPrice_Insert.sql" />
+    <Build Include="dbo\StoredProcedures\spProductPrice_Update.sql" />
     <Build Include="dbo\StoredProcedures\spProduct_Update.sql" />
     <Build Include="dbo\StoredProcedures\spRental_Insert.sql" />
     <Build Include="dbo\StoredProcedures\spRental_Update.sql" />
     <Build Include="dbo\StoredProcedures\spRental_Delete.sql" />
+    <Build Include="dbo\StoredProcedures\spProduct_GetAvailableProducts.sql" />
+    <Build Include="dbo\StoredProcedures\spProductPrice_Delete.sql" />
   </ItemGroup>
   <ItemGroup>
     <RefactorLog Include="RentalDatabase.refactorlog" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="dbo\PublishProfiles\RentalDatabase.publish.xml" />
+    <None Include="dbo\PublishProfiles\RentalDatabase.publish.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
 </Project>

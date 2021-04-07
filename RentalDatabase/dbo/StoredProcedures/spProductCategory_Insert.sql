@@ -7,4 +7,5 @@ BEGIN
 
 	INSERT INTO dbo.ProductCategory(ProductId,CategoryId)
 	VALUES (@productId, @categoryId);
+	SELECT CAST(SCOPE_IDENTITY() as int)
 END

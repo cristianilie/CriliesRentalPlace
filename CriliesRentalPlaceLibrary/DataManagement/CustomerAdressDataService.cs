@@ -7,7 +7,7 @@ using System.Text;
 
 namespace CriliesRentalPlaceLibrary.DataManagement
 {
-    class CustomerAdressDataService : IDataService<CustomerAdress>
+    public class CustomerAdressDataService : IDataService<CustomerAdress>
     {
         private readonly ISqlDataAccess _db;
         private const string connectionStringName = "SqlDb";
@@ -17,9 +17,9 @@ namespace CriliesRentalPlaceLibrary.DataManagement
             _db = db;
         }
 
-        public void Create(CustomerAdress item)
+        public int Create(CustomerAdress item)
         {
-            _db.SaveData("spCustomerAdress_Insert",
+            return _db.LoadData<int, dynamic>("spCustomerAdress_Insert",
                 new
                 {
                     customerId = item.CustomerId,
@@ -28,7 +28,7 @@ namespace CriliesRentalPlaceLibrary.DataManagement
                     adress = item.Adress
                 },
                 connectionStringName,
-                true);
+                true).SingleOrDefault();
         }
 
         public void Delete(int id)

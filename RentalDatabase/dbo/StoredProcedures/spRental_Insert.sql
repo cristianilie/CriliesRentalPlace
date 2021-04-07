@@ -11,4 +11,5 @@ BEGIN
 
 	INSERT INTO dbo.Rental(CustomerId,ProductId,RentedQuantity,StartDate,EndDate,TotalPrice)
 	VALUES (@customerId, @productId, @rentedQuantity, @startDate, @endDate, @totalPrice);
+	SELECT CAST(SCOPE_IDENTITY() as int);
 END

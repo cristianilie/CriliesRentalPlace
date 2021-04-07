@@ -18,9 +18,9 @@ namespace CriliesRentalPlaceLibrary.DataManagement
             _db = db;
         }
 
-        public void Create(Customer item)
+        public int Create(Customer item)
         {
-            _db.SaveData("spCustomer_Insert",
+            return _db.LoadData<int, dynamic>("spCustomer_Insert",
                          new
                          {
                              firstName = item.FirstName,
@@ -29,7 +29,7 @@ namespace CriliesRentalPlaceLibrary.DataManagement
                              phone = item.Phone
                          },
                          connectionStringName,
-                         true);
+                         true).SingleOrDefault();
         }
 
         public void Delete(int id)

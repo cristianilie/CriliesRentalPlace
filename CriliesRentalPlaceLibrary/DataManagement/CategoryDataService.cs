@@ -18,9 +18,9 @@ namespace CriliesRentalPlaceLibrary.DataManagement
             _db = db;
         }
 
-        public void Create(Category item)
+        public int Create(Category item)
         {
-            _db.SaveData("spCategory_Insert", new { title = item.Title }, connectionStringName, true);
+            return _db.LoadData<int, dynamic>("spCategory_Insert", new { title = item.Title }, connectionStringName, true).SingleOrDefault();
         }
 
         public void Delete(int id)

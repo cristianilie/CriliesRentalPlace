@@ -8,58 +8,53 @@ using System.Threading.Tasks;
 
 namespace CriliesRentalPlaceLibrary.DataManagement
 {
-    public class ProductStockDataService : IDataService<ProductStock>
+    public class ProductPriceDataService : IDataService<ProductPrice>
     {
         private readonly ISqlDataAccess _db;
         private const string connectionStringName = "SqlDb";
 
-        public ProductStockDataService(ISqlDataAccess db)
+        public ProductPriceDataService(ISqlDataAccess db)
         {
             _db = db;
         }
 
-        public void Create(ProductStock item)
+        public int Create(ProductPrice item)
         {
-            _db.SaveData("spProductStock_Insert",
+            return _db.LoadData<int,dynamic>("spProductPrice_Insert",
                 new
                 {
                     productId = item.ProductId,
                     pricePerDay = item.PricePerDay,
-                    stock = item.Stock,
-                    booked = item.Booked,
-                    available = item.Available,
                     vat = item.VAT
                 },
                 connectionStringName,
-                true);
+                true).SingleOrDefault();
         }
 
         public void Delete(int id)
         {
-            //TODO delete if not booked + more checkings
+            _db.SaveData("spProductPrice_Delete", new { id }, connectionStringName, true);
+            //TODO delete if not booked + more spProductPrice_Delete
         }
 
-        public IEnumerable<ProductStock> GetAll()
+        public IEnumerable<ProductPrice> GetAll()
         {
-            return _db.LoadData<ProductStock, dynamic>("SELECT * FROM dbo.ProductStock", null, connectionStringName, false);
+            return _db.LoadData<ProductPrice, dynamic>("SELECT * FROM dbo.ProductPrice", null, connectionStringName, false);
         }
 
-        public ProductStock GetById(int id)
+        public ProductPrice GetById(int id)
         {
-            return _db.LoadData<ProductStock, dynamic>("SELECT * FROM dbo.ProductStock WHERE Id = @id", new { id }, connectionStringName, false).FirstOrDefault();
+            return _db.LoadData<ProductPrice, dynamic>("SELECT * FROM dbo.ProductPrice WHERE ProductId = @id", new { id }, connectionStringName, false).FirstOrDefault();
         }
 
-        public void Update(int id, ProductStock item)
+        public void Update(int id, ProductPrice item)
         {
-            _db.SaveData("spProductStock_Update",
+            _db.SaveData("spProductPrice_Update",
                 new
                 {
                     id,
                     productId = item.ProductId,
                     pricePerDay = item.PricePerDay,
-                    stock = item.Stock,
-                    booked = item.Booked,
-                    available = item.Available,
                     vat = item.VAT
                 },
                 connectionStringName,

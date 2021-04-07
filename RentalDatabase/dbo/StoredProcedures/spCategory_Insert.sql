@@ -6,4 +6,5 @@ BEGIN
 
 	INSERT INTO dbo.Category(Title)
 	VALUES (@title);
+	SELECT CAST(SCOPE_IDENTITY() as int);
 END

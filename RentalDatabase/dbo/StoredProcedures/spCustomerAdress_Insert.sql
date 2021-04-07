@@ -10,4 +10,5 @@ BEGIN
 
 	INSERT INTO dbo.CustomerAdress(CustomerId,[State],City,Adress)
 	VALUES (@customerId, @state, @city, @adress);
+	SELECT CAST(SCOPE_IDENTITY() as int);
 END

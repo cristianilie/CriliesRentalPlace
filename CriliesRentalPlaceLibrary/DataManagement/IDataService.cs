@@ -10,7 +10,7 @@ namespace CriliesRentalPlaceLibrary.DataManagement
     {
         IEnumerable<T> GetAll();
         T GetById(int id);
-        void Create(T item);
+        int Create(T item);
         void Update(int id, T item);
         void Delete(int id);
     }

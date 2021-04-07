@@ -1,0 +1,24 @@
+﻿@page
+@model CriliesRentalPlaceWeb.Pages.Products.IndexModel
+@{
+
+
+}
+
+<h4>Manage Products</h4>
+<h5><a class="btn-link" asp-page="/Products/Edit">Create New Product</a></h5>
+
+<ul class="list-group">
+
+    @foreach (var product in Model.Products)
+    {
+        <li class="list-group-item">
+            @product.Id /  @product.Name
+            <div class="btn-group float-right" role="group" aria-label="Product Options">
+                <a type="button" class="btn btn-outline-info" asp-page="/Products/Edit" asp-route-id="@product.Id">Edit</a>
+                <a type="button" class="btn btn-outline-warning" asp-page="/Products/DeleteProduct" asp-route-id="@product.Id">Delete</a>
+            </div>
+        </li>
+
+    }
+</ul>

@@ -1,0 +1,15 @@
+﻿@page "{id:int}"
+@model CriliesRentalPlaceWeb.Pages.Categories.DeleteCategoryModel
+@{
+    ViewData["Title"] = "Delete Category";
+}
+
+<h3>Delete Category</h3>
+
+<div class="alert">
+    <h5>Are you sure you want to delete  "@Model.Category.Title"  category?</h5>
+    <form method="post">
+        <button type="submit" class="btn btn-outline-danger">Yes</button>
+        <a class="btn btn-outline-primary" asp-page="/Categories/Index">Cancel</a>
+    </form>
+</div>

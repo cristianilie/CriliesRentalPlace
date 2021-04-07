@@ -1,0 +1,15 @@
+﻿@page "{id:int}"
+@model CriliesRentalPlaceWeb.Pages.Products.DeleteProductModel
+@{
+    ViewData["Title"] = "Delete Product";
+}
+
+<h3>Delete Product</h3>
+
+<div class="alert">
+    <h5>Are you sure you want to delete  "@Model.Product.Name"  product?</h5>
+    <form method="post">
+        <button type="submit" class="btn btn-outline-danger">Yes</button>
+        <a class="btn btn-outline-primary" asp-page="/Products/Index" >Cancel</a>
+    </form>
+</div>

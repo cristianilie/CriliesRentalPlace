@@ -9,4 +9,5 @@ BEGIN
 
 	INSERT INTO dbo.Customer(FirstName,LastName,Email,Phone)
 	VALUES (@firstName, @lastName, @email, @phone);
+	SELECT CAST(SCOPE_IDENTITY() as int);
 END
