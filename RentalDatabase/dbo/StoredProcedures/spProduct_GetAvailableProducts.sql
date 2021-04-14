@@ -12,5 +12,5 @@ BEGIN
 	p.Id not in (
 		select r.ProductId from dbo.Rental r
 		where r.StartDate BETWEEN @startDate and @endDate
-		AND r.EndDate BETWEEN @startDate and @endDate);
+		OR r.EndDate BETWEEN @startDate and @endDate);
 END

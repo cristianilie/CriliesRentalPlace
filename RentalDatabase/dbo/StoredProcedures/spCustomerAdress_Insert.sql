@@ -1,5 +1,4 @@
 ﻿CREATE PROCEDURE [dbo].[spCustomerAdress_Insert]
-	@id int,
 	@customerId int,
 	@state varchar(50),
 	@city varchar(50),
