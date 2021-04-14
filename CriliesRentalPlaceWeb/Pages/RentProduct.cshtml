@@ -1,30 +1,27 @@
-﻿@page "{productId:int}"
+﻿@page 
 @model CriliesRentalPlaceWeb.Pages.RentProductModel
 @{
     ViewData["Title"] = "Rent Product";
-    string imagePath = "../images/" + (Model.ProductToRent.ImagePath ?? "noimage.jpg");
-
+    var imagePath = "images/" + (Model.ProductToRent.ImagePath ?? "defaultImage.jpg");
     string pricePerDayVAT = (Model.ProductToRent.PricePerDay * ((double)Model.ProductToRent.VAT / 100)).ToString("0.##");
 }
 
-<form method="post">
-    <div class="row justify-content-center m-3">
-        <div class="col-sm-8">
-            <div class="card">
-                <div class="card-header">
-                    <h1>@Model.ProductToRent.Name</h1>
-                </div>
-                <div class="card-body text-center">
-                    <div class="card-img-top" asp-append-version="true" style="background: url(@imagePath) no-repeat center; background-size: cover; width: 100%; height:400px;"></div>
-                    <h6>Description: @Model.ProductToRent.Description</h6>
-                    <h4>Rental interval : @Model.StartDate.ToShortDateString() - @Model.EndDate.ToShortDateString() </h4>
-                    <h4>Price / Day(VAT Included): $ @pricePerDayVAT</h4>
-                </div>
-                <div class="card-footer text-center">
-                    <a asp-page="Index" class="btn btn-primary">Back</a>
-                    <button type="submit" asp-route-productId="@Model.ProductToRent.ProductId" class="btn btn-primary">Rent Product</button>
-                </div>
+<div class="row justify-content-center m-3">
+    <div class="col-sm-8">
+        <div class="card">
+            <div class="card-header">
+                <h1>@Model.ProductToRent.Name</h1>
+            </div>
+            <div class="card-body text-center">
+                <div class="card-img-top" asp-append-version="true" style="background: url(@imagePath) no-repeat center; background-size: cover; width: 100%; height:400px;"></div>
+                <h6>Description: @Model.ProductToRent.Description</h6>
+                <h4>Rental interval : @Model.StartDate.ToShortDateString() - @Model.EndDate.ToShortDateString() </h4>
+                <h4>Price / Day(VAT Included): $ @pricePerDayVAT</h4>
+            </div>
+            <div class="card-footer text-center">
+                <a asp-page="Index" class="btn btn-primary">Back</a>
+                <a href="#"  class="btn btn-primary">Rent Product</a>
             </div>
         </div>
     </div>
-</form>
+</div>

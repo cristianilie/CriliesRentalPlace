@@ -32,7 +32,7 @@ namespace CriliesRentalPlaceWeb.Pages.Products
         }
 
         [BindProperty(SupportsGet = true)]
-        public Product Product { get; set; }
+        public CriliesRentalPlaceLibrary.Models.Product Product { get; set; }
         [BindProperty]
         public IFormFile Image { get; set; }
 
