@@ -5,6 +5,8 @@ using System.Linq;
 using System.Threading.Tasks;
 using CriliesRentalPlaceLibrary.DataManagement;
 using CriliesRentalPlaceLibrary.Models;
+using CriliesRentalPlaceWeb.Areas.Identity.Data;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
@@ -12,11 +14,17 @@ namespace CriliesRentalPlaceWeb.Pages
 {
     public class RentProductModel : PageModel
     {
-        private readonly IProductHandlingDataService<CriliesRentalPlaceLibrary.Models.Product> _productsDataService;
+        private readonly UserManager<ApplicationUser> _userManager;
+        private readonly SignInManager<ApplicationUser> _signInManager;
+        private readonly IProductHandlingDataService<Product> _productsDataService;
+        private readonly IDataService<Rental> _rentalDataService;
 
-        public RentProductModel(IProductHandlingDataService<CriliesRentalPlaceLibrary.Models.Product> productsDataService)
+        public RentProductModel(IProductHandlingDataService<Product> productsDataService, IDataService<Rental> rentalDataService, UserManager<ApplicationUser> userManager, SignInManager<ApplicationUser> signInManager)
         {
             _productsDataService = productsDataService;
+            _rentalDataService = rentalDataService;
+            _userManager = userManager;
+            _signInManager = signInManager;
         }
 
         [DataType(DataType.Date)]
@@ -32,6 +40,26 @@ namespace CriliesRentalPlaceWeb.Pages
         public void OnGet(int productId)
         {
             ProductToRent = _productsDataService.GetAvailableProducts(StartDate, EndDate).SingleOrDefault(p => p.ProductId == productId);
+        }
+
+        public async Task<IActionResult> OnPostAsync(int productId)
+        {
+            ProductToRent = _productsDataService.GetAvailableProducts(StartDate, EndDate).SingleOrDefault(p => p.ProductId == productId);
+            ApplicationUser applicationUser = await _userManager.GetUserAsync(User);
+            if (applicationUser != null)
+            {
+                _rentalDataService.Create(new Rental
+                {
+                    CustomerId = applicationUser.CustomerId,
+                    ProductId = ProductToRent.ProductId,
+                    RentedQuantity = 1,
+                    StartDate = StartDate,
+                    EndDate = EndDate,
+                    TotalPrice = ProductToRent.PricePerDay * ((double)ProductToRent.VAT / 100)
+                });
+            }
+
+            return Page();
         }
     }
 }

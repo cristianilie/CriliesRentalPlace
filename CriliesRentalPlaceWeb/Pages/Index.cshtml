@@ -5,38 +5,34 @@
 }
 
 <div class="container ">
-    <div class="form-row displayRow">
-
-        @if (Model.ProductCategories.Count() > 0)
-        {
-        <div class="form-inline mb-3">
-            <label>
-                Category 
-                <select class="form-control" id="productCategories">
-                    @foreach (var category in Model.ProductCategories)
-                    {
-                        <option value="@category.Id">@category.Title</option>
-                    }
+        <form method="post" class="displayRow">
+            <div class="input-group ml-0 form-inline mb-3 w-25">
+                <select name="categoryId" asp-for="@Model.SelectedCategoryId" asp-items="Model.ProductCategories" class="custom-select" id="inputGroupSelect02">
+                    <option value="">Select a category</option>
                 </select>
-            </label>
-        </div>
-        }
-        <label>
-        Start Date
-        <input class="filtersInputHeight" type="date" asp-for="@Model.StartDate" />
-        </label>
-        <label>
-            End Date
-            <input class="filtersInputHeight" type="date" asp-for="@Model.EndDate" />
-        </label>
-
-        <div class="input-group mb-3 w-25">
-            <input type="text" class="form-control" placeholder="Search" aria-label="Searxhxx" aria-describedby="basic-addon2">
-            <div class="input-group-append">
-                <a class="input-group-text btn btn-primary text-light" id="basic-addon2">Search</a>
+                <div class="input-group-append">
+                    <label class="input-group-text" for="inputGroupSelect02">Category</label>
+                </div>
             </div>
-        </div>
-    </div>
+
+            <div class="input-group">
+                <label class="ml-1">
+                    Start Date
+                    <input class="filtersInputHeight" type="date" asp-for="@Model.StartDate" />
+                </label>
+                <label class="ml-1">
+                    End Date
+                    <input class="filtersInputHeight " type="date" asp-for="@Model.EndDate" />
+                </label>
+            </div>
+
+            <div class="input-group mb-3 w-25 displayRow">
+                <input type="text" class="form-control" asp-for="@Model.SearchWord" placeholder="Search" aria-label="Search box" aria-describedby="basic-addon2">
+                <div class="input-group-append">
+                    <button type="submit" class="btn btn-primary text-light" id="basic-addon2">Search</button>
+                </div>
+            </div>
+        </form>
 
     <div class="card-deck pl-0 pr-0">
 
@@ -44,20 +40,20 @@
         {
             string imagePath = "images/" + (item.ImagePath ?? "defaultImage.jpg");
             string productDescription = item.Description.Length > 30 ? item.Description.Substring(0, 30) + ".." : item.Description;
-        <div class="card m-3" style="min-width: 18rem; max-width:30.5%;">
-            <div class="card-img-top" style="background: url(@imagePath) no-repeat center; background-size: cover; width: 100%; height:200px;"></div>
-            <div class="card-body">
-                <h4 hidden class="card-title">@item.ProductId</h4>
-                <h4 class="card-title">@item.Name</h4>
-                <p class="card-text">@productDescription </p>
-                <a asp-page="/RentProduct"
-                   asp-route-productId="@item.ProductId"
-                   asp-route-startDate="@Model.StartDate.ToShortDateString()"
-                   asp-route-endDate="@Model.EndDate.ToShortDateString()"
-                   class="btn btn-primary">Rent Product</a>
-            </div>
-        </div>
 
+            <div class="card m-3" style="min-width: 18rem; max-width:30.5%;">
+                <div class="card-img-top" style="background: url(@imagePath) no-repeat center; background-size: cover; width: 100%; height:200px;"></div>
+                <div class="card-body">
+                    <h4 hidden class="card-title">@item.ProductId</h4>
+                    <h4 class="card-title">@item.Name</h4>
+                    <p class="card-text">@productDescription </p>
+                    <a asp-page="/RentProduct"
+                       asp-route-productId="@item.ProductId"
+                       asp-route-startDate="@Model.StartDate.ToShortDateString()"
+                       asp-route-endDate="@Model.EndDate.ToShortDateString()"
+                       class="btn btn-primary">Rent Product</a>
+                </div>
+            </div>
 
         }
 
