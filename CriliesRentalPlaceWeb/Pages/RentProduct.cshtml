@@ -5,6 +5,13 @@
     string imagePath = "../images/" + (Model.ProductToRent.ImagePath ?? "noimage.jpg");
 
     string pricePerDayVAT = (Model.ProductToRent.PricePerDay * ((double)Model.ProductToRent.VAT / 100)).ToString("0.##");
+    TimeSpan rentalDays = Model.EndDate - Model.StartDate;
+    string totalPrice = (Model.ProductToRent.PricePerDay * ((double)Model.ProductToRent.VAT / 100) * rentalDays.Days).ToString("0.##");
+
+    var routeUrl = Url.RouteUrl(ViewContext.RouteData.Values);
+    var qsPath = ViewContext.HttpContext.Request.QueryString.Value;
+    var returnUrl = $"{routeUrl}{qsPath}";
+
 }
 
 <form method="post">
@@ -19,10 +26,12 @@
                     <h6>Description: @Model.ProductToRent.Description</h6>
                     <h4>Rental interval : @Model.StartDate.ToShortDateString() - @Model.EndDate.ToShortDateString() </h4>
                     <h4>Price / Day(VAT Included): $ @pricePerDayVAT</h4>
+                    <h4>Total Price(VAT Included): $ @(totalPrice)</h4>
                 </div>
                 <div class="card-footer text-center">
                     <a asp-page="Index" class="btn btn-primary">Back</a>
-                    <button type="submit" asp-route-productId="@Model.ProductToRent.ProductId" class="btn btn-primary">Rent Product</button>
+                    <button type="submit" asp-route-productId="@Model.ProductToRent.ProductId"
+                                            asp-route-returnUrl="@returnUrl" class="btn-primary">Rent Product</button>
                 </div>
             </div>
         </div>

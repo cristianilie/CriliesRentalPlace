@@ -42,24 +42,27 @@ namespace CriliesRentalPlaceWeb.Pages
             ProductToRent = _productsDataService.GetAvailableProducts(StartDate, EndDate).SingleOrDefault(p => p.ProductId == productId);
         }
 
-        public async Task<IActionResult> OnPostAsync(int productId)
+        public async Task<IActionResult> OnPostAsync(int productId, string returnUrl = null)
         {
             ProductToRent = _productsDataService.GetAvailableProducts(StartDate, EndDate).SingleOrDefault(p => p.ProductId == productId);
             ApplicationUser applicationUser = await _userManager.GetUserAsync(User);
             if (applicationUser != null)
             {
-                _rentalDataService.Create(new Rental
-                {
-                    CustomerId = applicationUser.CustomerId,
-                    ProductId = ProductToRent.ProductId,
-                    RentedQuantity = 1,
-                    StartDate = StartDate,
-                    EndDate = EndDate,
-                    TotalPrice = ProductToRent.PricePerDay * ((double)ProductToRent.VAT / 100)
-                });
+                TimeSpan rentalDays = EndDate - StartDate;
+
+                return RedirectToPage("/RentalPayment",
+                                      new
+                                      {
+                                          customerId = applicationUser.CustomerId,
+                                          productId = ProductToRent.ProductId,
+                                          rentedQuantity = 1,
+                                          startDate = StartDate,
+                                          endDate = EndDate,
+                                          totalPrice = ProductToRent.PricePerDay * ((double)ProductToRent.VAT / 100) * rentalDays.Days
+                                      });
             }
 
-            return Page();
+            return RedirectToPage("/Account/Login", new { area = "Identity", returnUrl });
         }
     }
 }
