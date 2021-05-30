@@ -1,0 +1,63 @@
+﻿@page
+@model CriliesRentalPlaceWeb.Pages.RentalPaymentModel
+@{
+}
+
+
+
+<div class="row">
+    <div class="container">
+        <button id="cashPayment" onclick="displayPaymentMethod(this.id)" class="btn btn-outline-success">Pay with Cash</button>
+        <button id="cardPayment" onclick="displayPaymentMethod(this.id)" class="btn btn-outline-info">Pay with Credit Card</button>
+    </div>
+
+    <div id="cashPaymentArea" class="container" style="display:none;">
+        <h3>Cash</h3>
+        <h5>You will recieve the product after you pay for it with cash, at our rental shop.</h5>
+        <div class="card-footer">
+            <button disabled type="button" class="subscribe btn btn-primary btn-block shadow-sm"> Confirm Cash Payment Request </button>
+        </div>
+    </div>
+
+    <div id="cardPaymentArea" class="container">
+        <form method="post">
+            <h3>Credit Card</h3>
+            <h5>Amount: @Model.TotalPrice.ToString("0.##")</h5>
+            <label for="nameOnCard">Name on card:</label>
+            <div class="input-group mb-3">
+                <input type="text" class="form-control" placeholder="JOHN DOE" id="nameOnCard">
+            </div>
+
+            <label for="creditCardNumber">Credit card number:</label>
+            <div class="input-group mb-3">
+                <input type="text" class="form-control" id="creditCardNumber" placeholder="1111-2222-3333-4444">
+            </div>
+
+            <div class="row">
+                <div class="col-sm-8">
+                    <div class="form-group">
+                        <label class="hidden-xs">
+                                <h6>Expiration Date</h6>
+                        </label>
+                        <div class="input-group"> <input type="number" placeholder="MM" name="" class="form-control" required> <input type="number" placeholder="YY" name="" class="form-control" required> </div>
+                    </div>
+                </div>
+                <div class="col-sm-4">
+                    <div class="form-group mb-4">
+                        <label data-toggle="tooltip" title="Three digit CV code on the back of your card">
+                            <h6>CVV <i class="fa fa-question-circle d-inline"></i></h6>
+                        </label> <input type="text" required class="form-control">
+                    </div>
+                </div>
+            </div>
+            <div class="card-footer">
+                <button type="button" class="subscribe btn btn-primary btn-block shadow-sm"> Confirm Payment </button>
+            </div>
+        </form>
+    </div>
+
+</div> 
+
+<script>
+   
+</script>
