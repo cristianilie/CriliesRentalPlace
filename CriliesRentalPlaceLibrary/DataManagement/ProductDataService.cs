@@ -72,7 +72,6 @@ namespace CriliesRentalPlaceLibrary.DataManagement
 
         public IEnumerable<AvailableProduct> GetAvailableProducts(DateTime startDate, DateTime endDate, int categoryId = 0)
         {
-            //_category.GetById(categoryId);
             return _db.LoadData<AvailableProduct, dynamic>("spProduct_GetAvailableProducts",
                                                            new { startDate = startDate.Date, endDate = endDate.Date },
                                                            connectionStringName,

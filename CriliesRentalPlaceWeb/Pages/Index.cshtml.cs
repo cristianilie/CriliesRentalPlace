@@ -1,6 +1,7 @@
 ﻿using CriliesRentalPlaceLibrary.DatabaseAccess;
 using CriliesRentalPlaceLibrary.DataManagement;
 using CriliesRentalPlaceLibrary.Models;
+using CriliesRentalPlaceLibrary.Validation;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -20,10 +21,12 @@ namespace CriliesRentalPlaceWeb.Pages
         private readonly IDataService<ProductCategory> _productCategoryDataService;
 
         [DataType(DataType.Date)]
+        [StartDateValidation]
         [BindProperty(SupportsGet = true)]
         public DateTime StartDate { get; set; } = DateTime.Now;
 
         [DataType(DataType.Date)]
+        [EndDateValidation]
         [BindProperty(SupportsGet = true)]
         public DateTime EndDate { get; set; } = DateTime.Now.AddDays(1);
 
@@ -67,11 +70,13 @@ namespace CriliesRentalPlaceWeb.Pages
                 {
                     AvailableProducts = AvailableProducts.Where(p => p.Name.Contains(SearchWord)).ToList();
                 }
+                SearchEnabled = false;
             }
             else
             {
                 InitializeAvailableProductsAndCategories();
             }
+
         }
 
         private void InitializeAvailableProductsAndCategories()
@@ -84,18 +89,33 @@ namespace CriliesRentalPlaceWeb.Pages
             }).ToList();
         }
 
-        public IActionResult OnPost()
+        public IActionResult OnPost(int? productId, bool searchEnabled = false)
         {
-            string tempCategoryId = Request.Form["categoryId"];
-            return RedirectToPage(new
+            if (ModelState.IsValid && EndDate_IsGreaterThan_StartDate())
             {
-                SearchEnabled = true,
-                StartDate = StartDate.ToString("yyyy-MM-dd"),
-                EndDate = EndDate.ToString("yyyy-MM-dd"),
-                SearchWord = SearchWord,
-                SelectedCategoryId = string.IsNullOrEmpty(tempCategoryId) ? 0 : Convert.ToInt32(tempCategoryId)
-            });
+                if (searchEnabled)
+                {
+                    string tempCategoryId = Request.Form["categoryId"];
+                    return RedirectToPage(new
+                    {
+                        SearchEnabled = searchEnabled,
+                        StartDate = StartDate.ToString("yyyy-MM-dd"),
+                        EndDate = EndDate.ToString("yyyy-MM-dd"),
+                        SearchWord = SearchWord,
+                        SelectedCategoryId = string.IsNullOrEmpty(tempCategoryId) ? 0 : Convert.ToInt32(tempCategoryId)
+                    });
+                }
+                else
+                {
+                    return RedirectToPage("/RentProduct", new { productId, startDate = StartDate, endDate = EndDate });
+                }
+            }
+
+            return RedirectToPage();
+
         }
+
+        private bool EndDate_IsGreaterThan_StartDate() => StartDate.Date < EndDate.Date;
 
 
     }
