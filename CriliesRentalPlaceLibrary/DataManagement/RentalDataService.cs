@@ -28,6 +28,7 @@ namespace CriliesRentalPlaceLibrary.DataManagement
                     startDate = item.StartDate,
                     endDate = item.EndDate,
                     totalPrice = item.TotalPrice,
+                    rentalStatusId = item.RentalStatusId
                 }, 
                 connectionStringName, 
                 true).SingleOrDefault();
@@ -61,6 +62,7 @@ namespace CriliesRentalPlaceLibrary.DataManagement
                     startDate = item.StartDate,
                     endDate = item.EndDate,
                     totalPrice = item.TotalPrice,
+                    rentalStatusId = item.RentalStatusId
                 },
                 connectionStringName,
                 true);
