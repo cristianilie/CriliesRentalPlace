@@ -7,6 +7,8 @@
     [StartDate] DATETIME2 NOT NULL, 
     [EndDate] DATETIME2 NOT NULL, 
     [TotalPrice] MONEY NOT NULL, 
+    [RentalStatusId] INT NULL, 
     CONSTRAINT [FK_Rental_ToCustomerTable] FOREIGN KEY (CustomerId) REFERENCES Customer(Id),
-    CONSTRAINT [FK_Rental_ToProductTable] FOREIGN KEY (ProductId) REFERENCES Product(Id)
+    CONSTRAINT [FK_Rental_ToProductTable] FOREIGN KEY (ProductId) REFERENCES Product(Id), 
+    CONSTRAINT [FK_Rental_To_RentalStatus] FOREIGN KEY (RentalStatusId) REFERENCES RentalStatus(Id)
 )
