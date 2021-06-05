@@ -16,5 +16,6 @@ namespace CriliesRentalPlaceLibrary.Models
         public DateTime StartDate { get; set; }
         public DateTime EndDate { get; set; }
         public double TotalPrice { get; set; }
+        public int RentalStatusId { get; set; }
     }
 }
