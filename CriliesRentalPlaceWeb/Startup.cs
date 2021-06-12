@@ -36,6 +36,7 @@ namespace CriliesRentalPlaceWeb
             services.AddTransient<IDataService<ProductCategory>, ProductCategoryDataService>();
             services.AddTransient<IDataService<ProductPrice>, ProductPriceDataService>();
             services.AddTransient<IDataService<Rental>, RentalDataService>();
+            services.AddTransient<IDataService<RentalStatus>, RentalStatusDataService>();
             services.Configure<IdentityOptions>(options =>
             {
                 // Password settings.

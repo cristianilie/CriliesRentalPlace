@@ -22,7 +22,14 @@ namespace CriliesRentalPlaceLibrary.DataManagement
 
         public int Create(RentalStatus item)
         {
-            return _db.LoadData<int, dynamic>("", new { }, connectionStringName, true).SingleOrDefault(); 
+            return _db.LoadData<int, dynamic>("spRentalStatus_Insert",
+                                              new {
+                                                      isInCustomerCustody = item.IsInCustomerCustody == false ? 0 : 1,
+                                                      paymentFinished = item.PaymentFinished == false ? 0 : 1
+                                              },
+                                              connectionStringName,
+                                              true
+                                              ).SingleOrDefault(); 
         }
 
         public void Delete(int id)
