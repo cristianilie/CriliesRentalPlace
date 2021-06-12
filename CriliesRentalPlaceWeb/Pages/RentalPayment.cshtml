@@ -1,6 +1,7 @@
 ﻿@page
 @model CriliesRentalPlaceWeb.Pages.RentalPaymentModel
 @{
+
 }
 
 
@@ -11,18 +12,37 @@
         <button id="cardPayment" onclick="displayPaymentMethod(this.id)" class="btn btn-outline-info">Pay with Credit Card</button>
     </div>
 
+
+
     <div id="cashPaymentArea" class="container" style="display:none;">
-        <h3>Cash</h3>
-        <h5>You will recieve the product after you pay for it with cash, at our rental shop.</h5>
-        <div class="card-footer">
-            <button disabled type="button" class="subscribe btn btn-primary btn-block shadow-sm"> Confirm Cash Payment Request </button>
-        </div>
+        <form method="post">
+            <input asp-for="@Model.CustomerId" hidden />
+            <input asp-for="@Model.ProductId" hidden />
+            <input asp-for="@Model.StartDate" hidden />
+            <input asp-for="@Model.EndDate" hidden />
+            <input asp-for="@Model.RentedQuantity" hidden />
+            <input asp-for="@Model.TotalPrice" hidden />
+
+            <h3>Cash</h3>
+            <h5>You will recieve the product after you pay for it with cash, at our rental shop.</h5>
+            <div class="card-footer">
+                <button type="submit" asp-route-isCardPayment="@false" class="subscribe btn btn-primary btn-block shadow-sm"> Confirm Cash Payment Request </button>
+            </div>
+        </form>
     </div>
 
     <div id="cardPaymentArea" class="container">
         <form method="post">
+            <input asp-for="@Model.CustomerId" hidden />
+            <input asp-for="@Model.ProductId" hidden />
+            <input asp-for="@Model.StartDate" hidden />
+            <input asp-for="@Model.EndDate" hidden />
+            <input asp-for="@Model.RentedQuantity" hidden />
+            <input asp-for="@Model.TotalPrice" hidden />
+
             <h3>Credit Card</h3>
             <h5>Amount: @Model.TotalPrice.ToString("0.##")</h5>
+
             <label for="nameOnCard">Name on card:</label>
             <div class="input-group mb-3">
                 <input type="text" class="form-control" placeholder="JOHN DOE" id="nameOnCard">
@@ -37,7 +57,7 @@
                 <div class="col-sm-8">
                     <div class="form-group">
                         <label class="hidden-xs">
-                                <h6>Expiration Date</h6>
+                            <h6>Expiration Date</h6>
                         </label>
                         <div class="input-group"> <input type="number" placeholder="MM" name="" class="form-control" required> <input type="number" placeholder="YY" name="" class="form-control" required> </div>
                     </div>
@@ -51,13 +71,13 @@
                 </div>
             </div>
             <div class="card-footer">
-                <button type="button" class="subscribe btn btn-primary btn-block shadow-sm"> Confirm Payment </button>
+                <button type="submit" asp-route-isCardPayment="@true" class="subscribe btn btn-primary btn-block shadow-sm"> Confirm Payment </button>
             </div>
         </form>
     </div>
 
-</div> 
+</div>
 
 <script>
-   
+
 </script>

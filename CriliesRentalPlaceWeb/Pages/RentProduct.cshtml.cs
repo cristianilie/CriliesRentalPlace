@@ -18,13 +18,15 @@ namespace CriliesRentalPlaceWeb.Pages
         private readonly SignInManager<ApplicationUser> _signInManager;
         private readonly IProductHandlingDataService<Product> _productsDataService;
         private readonly IDataService<Rental> _rentalDataService;
+        private readonly IDataService<RentalStatus> _rentaStatuslDataService;
 
-        public RentProductModel(IProductHandlingDataService<Product> productsDataService, IDataService<Rental> rentalDataService, UserManager<ApplicationUser> userManager, SignInManager<ApplicationUser> signInManager)
+        public RentProductModel(IProductHandlingDataService<Product> productsDataService, IDataService<Rental> rentalDataService, UserManager<ApplicationUser> userManager, SignInManager<ApplicationUser> signInManager, IDataService<RentalStatus> rentaStatuslDataService)
         {
             _productsDataService = productsDataService;
             _rentalDataService = rentalDataService;
             _userManager = userManager;
             _signInManager = signInManager;
+            _rentaStatuslDataService = rentaStatuslDataService;
         }
 
         [DataType(DataType.Date)]
